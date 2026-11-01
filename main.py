@@ -85,14 +85,14 @@ def download_ror2():
 resolve_steam_directories()
 
 with open("log.txt", "w") as f:
-    print("Cache:" + APP_CACHE_DIRECTORY)
+    print("Cache:" + APP_CACHE_DIRECTORY, file=f)
     print("Data:" + APP_DATA_DIRECTORY)
-    print("App:" + platformdirs.user_applications_dir(appname="Somewhere Else", appauthor="Remesthesia"))
-    print("Config:" + platformdirs.user_config_dir(appname="Somewhere Else", appauthor="Remesthesia"))
-    print("Root:" + STEAM_ROOT_PATH)
-    print("Target:" + STEAM_PATH)
-    print("Manifest:" + ROR2_MANIFEST)
-    print("Game Directory:" + ROR2_GAME_DIRECTORY)
+    print("App:" + platformdirs.user_applications_dir(appname="Somewhere Else", appauthor="Remesthesia"), file=f)
+    print("Config:" + platformdirs.user_config_dir(appname="Somewhere Else", appauthor="Remesthesia"), file=f)
+    print("Root:" + STEAM_ROOT_PATH, file=f)
+    print("Target:" + STEAM_PATH, file=f)
+    print("Manifest:" + ROR2_MANIFEST, file=f)
+    print("Game Directory:" + ROR2_GAME_DIRECTORY, file=f)
 
 # download_depot_downloader()
 # download_ror2()
