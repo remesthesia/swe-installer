@@ -26,4 +26,18 @@ jobs:
     - name: Build
       working-directory: ./
       run: |
-        pyinstaller ${{ env.FILE }}
+        pyinstaller --onefile ${{ env.FILE }}
+
+    - name: Windows
+      if: matrix.os == 'windows-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: swe-installer-windows
+        path: dist/
+
+    - name: Linux
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: swe-installer-linux
+        path: dist/
