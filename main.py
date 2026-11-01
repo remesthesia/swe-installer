@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 
 import platformdirs
@@ -34,31 +35,42 @@ STEAM_PATH = ""
 ROR2_MANIFEST = ""
 ROR2_GAME_DIRECTORY = ""
 
+sys.stdout = open("log.txt", "w", buffering=1)
 
 def resolve_steam_directories():
+    print("Running Resolve Steam Directories")
     global STEAM_ROOT_PATH
     if sys.platform == "linux":
         STEAM_ROOT_PATH = str(Path.home().joinpath(".steam/steam").resolve())
     else:
+        print("Running on Windows")
         import winreg
+        print("Imported WinReg")
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Software/Valve/Steam") as k:
+            print("Opened Key")
             STEAM_ROOT_PATH = winreg.QueryValueEx(k, "SteamPath")[0]
+            print("Found SteamPath at: " + STEAM_ROOT_PATH)
 
     with open(f"{STEAM_ROOT_PATH}/steamapps/libraryfolders.vdf") as f:
         libs = vdf.load(f)["libraryfolders"]
+        print("Loaded libs")
 
     global STEAM_PATH
     STEAM_PATH = str([Path(v["path"]) for v in libs.values()][0])
+    print("Set STEAM_PATH to: " + STEAM_PATH)
 
     global ROR2_MANIFEST
     ROR2_MANIFEST = f"{STEAM_ROOT_PATH}/steamapps/appmanifest_{ROR2_APP_ID}.acf"
+    print("Set ROR2_MANIFEST to: " + ROR2_MANIFEST)
     if Path(ROR2_MANIFEST).exists():
+        print("Manifest Exists")
         with open(ROR2_MANIFEST) as f:
+            print("Opened Manifest")
             path = vdf.load(f)["AppState"]["installdir"]
+            print("Found Path: " + path)
         global ROR2_GAME_DIRECTORY
         ROR2_GAME_DIRECTORY = f"{STEAM_PATH}/steamapps/common/{path}"
-
-
+        print("Set ROR2_GAME_DIRECTORY to: " + ROR2_GAME_DIRECTORY)
 
 def download_depot_downloader():
     if not Path(DEPOT_DOWNLOADER_EXECUTABLE).exists():
@@ -82,17 +94,21 @@ def download_ror2():
         "-dir", ROR2_INSTALL_DIRECTORY
     ])
 
+def reinstall_ror2():
+    for item in Path(ROR2_GAME_DIRECTORY).iterdir():
+        shutil.move(str(item), f"{ROR2_UNINSTALL_DIRECTORY}")
+
 resolve_steam_directories()
 
-with open("log.txt", "w") as f:
-    print("Cache:" + APP_CACHE_DIRECTORY, file=f)
-    print("Data:" + APP_DATA_DIRECTORY)
-    print("App:" + platformdirs.user_applications_dir(appname="Somewhere Else", appauthor="Remesthesia"), file=f)
-    print("Config:" + platformdirs.user_config_dir(appname="Somewhere Else", appauthor="Remesthesia"), file=f)
-    print("Root:" + STEAM_ROOT_PATH, file=f)
-    print("Target:" + STEAM_PATH, file=f)
-    print("Manifest:" + ROR2_MANIFEST, file=f)
-    print("Game Directory:" + ROR2_GAME_DIRECTORY, file=f)
+print("Cache:" + APP_CACHE_DIRECTORY)
+print("Data:" + APP_DATA_DIRECTORY)
+print("App:" + platformdirs.user_applications_dir(appname="Somewhere Else", appauthor="Remesthesia"))
+print("Config:" + platformdirs.user_config_dir(appname="Somewhere Else", appauthor="Remesthesia"))
+print("Root:" + STEAM_ROOT_PATH)
+print("Target:" + STEAM_PATH)
+print("Manifest:" + ROR2_MANIFEST)
+print("Game Directory:" + ROR2_GAME_DIRECTORY)
 
 # download_depot_downloader()
 # download_ror2()
+# reinstall_ror2()
