@@ -35,7 +35,7 @@ STEAM_PATH = ""
 ROR2_MANIFEST = ""
 ROR2_GAME_DIRECTORY = ""
 
-sys.stdout = open("log.txt", "w", buffering=1)
+sys.stdout = open(str((Path(sys.executable)).parent) + "/log.txt", "w", buffering=1)
 
 def resolve_steam_directories():
     print("Running Resolve Steam Directories")
