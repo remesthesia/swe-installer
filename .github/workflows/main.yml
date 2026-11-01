@@ -1,1 +1,16 @@
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['windows-latest', 'ubuntu-latest']
 
+    env:
+      FILE: 'main.py'
+
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.14.x
