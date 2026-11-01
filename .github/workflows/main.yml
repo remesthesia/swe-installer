@@ -6,9 +6,6 @@ jobs:
       matrix:
         os: ['windows-latest', 'ubuntu-latest']
 
-    env:
-      FILE: 'main.py'
-
     steps:
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -18,3 +15,7 @@ jobs:
     - name: Install PyInstaller
       run: |
         pip install pyinstaller
+
+    - name: Build
+      run: |
+        pyinstaller main.py
