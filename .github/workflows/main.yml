@@ -13,9 +13,11 @@ jobs:
         python-version: 3.14.x
 
     - name: Install PyInstaller
+      working-directory: ./
       run: |
         pip install pyinstaller
 
     - name: Build
+      working-directory: ./
       run: |
         pyinstaller main.py
