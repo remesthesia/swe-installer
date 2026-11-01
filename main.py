@@ -51,6 +51,16 @@ def resolve_steam_directories():
             STEAM_ROOT_PATH = winreg.QueryValueEx(k, "SteamPath")[0]
             print("Found SteamPath at: " + STEAM_ROOT_PATH)
 
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "Software/Valve/Steam") as k:
+            print("Opened Key 2")
+            STEAM_ROOT_PATH = winreg.QueryValueEx(k, "SteamPath")[0]
+            print("Found SteamPath at: " + STEAM_ROOT_PATH)
+
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "Software/WOW6432Node/Valve/Steam") as k:
+            print("Opened Key 3")
+            STEAM_ROOT_PATH = winreg.QueryValueEx(k, "SteamPath")[0]
+            print("Found SteamPath at: " + STEAM_ROOT_PATH)
+
     with open(f"{STEAM_ROOT_PATH}/steamapps/libraryfolders.vdf") as f:
         libs = vdf.load(f)["libraryfolders"]
         print("Loaded libs")
