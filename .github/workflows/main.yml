@@ -5,6 +5,9 @@ jobs:
     strategy:
       matrix:
         os: ['windows-latest', 'ubuntu-latest']
+        
+    env:
+      FILE: 'main.py'  
 
     steps:
     - name: Set up Python
@@ -20,4 +23,4 @@ jobs:
     - name: Build
       working-directory: ./
       run: |
-        pyinstaller main.py
+        pyinstaller ${{ env.FILE }}
