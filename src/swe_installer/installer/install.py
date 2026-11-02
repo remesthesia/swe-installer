@@ -1,5 +1,6 @@
 import os
 import shutil
+import ssl
 import subprocess
 import sys
 from io import BytesIO
@@ -12,6 +13,8 @@ import vdf
 from swe_installer import constants, paths
 
 steam_username = ""
+context = ssl._create_unverified_context()
+
 
 def download_depot_downloader():
     paths.app_cache_dir().mkdir(parents=True, exist_ok=True)
@@ -46,7 +49,7 @@ def downgrade_ror2():
     shutil.copytree(paths.ror2_download_path(), paths.ror2_directory())
 
 def install_bepinex():
-    with urlopen(request.Request(constants.BEPINEX_URL, headers={"User-Agent": constants.APP_NAME})) as response:
+    with urlopen(request.Request(constants.BEPINEX_URL, headers={"User-Agent": constants.APP_NAME}), context=context) as response:
         with ZipFile(BytesIO(response.read())) as archive:
             archive.extractall(paths.bepinex_install_dir())
 
@@ -72,21 +75,21 @@ def fix_bepinex_linux():
             vdf.dump(src, f, pretty=True)
 
 def install_ror2bepinexpack():
-    with urlopen(request.Request(constants.ROR2BEPINEXPACK_URL, headers={"User-Agent": constants.APP_NAME})) as response:
+    with urlopen(request.Request(constants.ROR2BEPINEXPACK_URL, headers={"User-Agent": constants.APP_NAME}), context=context) as response:
         with ZipFile(BytesIO(response.read())) as archive:
             archive.extractall(paths.ror2bepinexpack_install_dir())
 
     shutil.copytree(f"{paths.ror2bepinexpack_install_dir()}/BepInEx", f"{paths.ror2_directory()}/BepInEx", dirs_exist_ok=True)
 
 def install_hookgenpatcher():
-    with urlopen(request.Request(constants.HOOKGENPATCHER_URL, headers={"User-Agent": constants.APP_NAME})) as response:
+    with urlopen(request.Request(constants.HOOKGENPATCHER_URL, headers={"User-Agent": constants.APP_NAME}), context=context) as response:
         with ZipFile(BytesIO(response.read())) as archive:
             archive.extractall(paths.hookgenpatcher_install_dir())
 
     shutil.copytree(f"{paths.hookgenpatcher_install_dir()}/BepInEx", f"{paths.ror2_directory()}/BepInEx", dirs_exist_ok=True)
 
 def install_lighterpatcher():
-    with urlopen(request.Request(constants.LIGHTERPATCHER_URL, headers={"User-Agent": constants.APP_NAME})) as response:
+    with urlopen(request.Request(constants.LIGHTERPATCHER_URL, headers={"User-Agent": constants.APP_NAME}), context=context) as response:
         with ZipFile(BytesIO(response.read())) as archive:
             archive.extractall(paths.lighterpatcher_install_dir())
 
