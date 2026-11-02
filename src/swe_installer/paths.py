@@ -19,11 +19,17 @@ def app_data_dir() -> Path:
 def depot_downloader_dir() -> Path:
     return Path(f"{installer_tools_dir()}/Depot Downloader")
 
+def bepinex_install_dir() -> Path:
+    return Path(f"{installer_installs_dir()}/BepInEx")
+
 def depot_downloader_executable_path() -> Path:
     return Path(f"{depot_downloader_dir()}/{"DepotDownloader.exe" if sys.platform == "windows" else "DepotDownloader"}")
 
 def steam_dir() -> Path:
     return srctools.steam.get_steam_install_path()
+
+def steam_config_path() -> Path:
+    return Path(f"{steam_dir()}/config/config.vdf")
 
 def installer_tools_dir() -> Path:
     return Path(f"{app_data_dir()}/Tools")
