@@ -7,7 +7,7 @@ jobs:
         os: ['windows-latest', 'ubuntu-latest']
         
     env:
-      FILE: 'main.py'  
+      FILE: 'run.py'
 
     steps:
     - name: Checkout
