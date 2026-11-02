@@ -1,0 +1,2 @@
+def uninstall():
+    quit()
