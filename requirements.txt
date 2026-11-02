@@ -1,3 +1,4 @@
 platformdirs==4.14.2
 vdf==3.4
 steampathfinder
+srctools
