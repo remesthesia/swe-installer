@@ -22,6 +22,16 @@ def depot_downloader_dir() -> Path:
 def bepinex_install_dir() -> Path:
     return Path(f"{installer_installs_dir()}/BepInEx")
 
+def ror2bepinexpack_install_dir() -> Path:
+    return Path(f"{installer_installs_dir()}/RoR2BepInExPack")
+
+def hookgenpatcher_install_dir() -> Path:
+    return Path(f"{installer_installs_dir()}/HookGenPatcher")
+
+def lighterpatcher_install_dir() -> Path:
+    return Path(f"{installer_installs_dir()}/LighterPatcher")
+
+
 def depot_downloader_executable_path() -> Path:
     return Path(f"{depot_downloader_dir()}/{"DepotDownloader.exe" if sys.platform == "windows" else "DepotDownloader"}")
 

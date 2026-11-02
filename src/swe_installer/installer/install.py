@@ -45,7 +45,7 @@ def downgrade_ror2():
     shutil.rmtree(paths.ror2_directory(), ignore_errors=True)
     shutil.copytree(paths.ror2_download_path(), paths.ror2_directory())
 
-def download_bepinex():
+def install_bepinex():
     with urlopen(request.Request(constants.BEPINEX_URL, headers={"User-Agent": constants.APP_NAME})) as response:
         with ZipFile(BytesIO(response.read())) as archive:
             archive.extractall(paths.bepinex_install_dir())
@@ -71,12 +71,34 @@ def fix_bepinex_linux():
         with open(f"{paths.steam_dir()}/userdata/{steam_id}/config/localconfig.vdf", "w") as f:
             vdf.dump(src, f, pretty=True)
 
+def install_ror2bepinexpack():
+    with urlopen(request.Request(constants.ROR2BEPINEXPACK_URL, headers={"User-Agent": constants.APP_NAME})) as response:
+        with ZipFile(BytesIO(response.read())) as archive:
+            archive.extractall(paths.ror2bepinexpack_install_dir())
 
+    shutil.copytree(f"{paths.ror2bepinexpack_install_dir()}/BepInEx", f"{paths.ror2_directory()}/BepInEx", dirs_exist_ok=True)
+
+def install_hookgenpatcher():
+    with urlopen(request.Request(constants.HOOKGENPATCHER_URL, headers={"User-Agent": constants.APP_NAME})) as response:
+        with ZipFile(BytesIO(response.read())) as archive:
+            archive.extractall(paths.hookgenpatcher_install_dir())
+
+    shutil.copytree(f"{paths.hookgenpatcher_install_dir()}/BepInEx", f"{paths.ror2_directory()}/BepInEx", dirs_exist_ok=True)
+
+def install_lighterpatcher():
+    with urlopen(request.Request(constants.LIGHTERPATCHER_URL, headers={"User-Agent": constants.APP_NAME})) as response:
+        with ZipFile(BytesIO(response.read())) as archive:
+            archive.extractall(paths.lighterpatcher_install_dir())
+
+    shutil.copytree(f"{paths.lighterpatcher_install_dir()}/BepInEx", f"{paths.ror2_directory()}/BepInEx", dirs_exist_ok=True)
 
 def install():
     print("If on Linux, please make sure Steam is closed before continuing.")
     download_depot_downloader()
     download_ror2()
     downgrade_ror2()
-    download_bepinex()
+    install_bepinex()
+    install_ror2bepinexpack()
+    install_hookgenpatcher()
+    install_lighterpatcher()
     fix_bepinex_linux()
