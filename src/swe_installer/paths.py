@@ -5,7 +5,6 @@ import srctools.steam
 
 from pathlib import Path
 
-from SteamPathFinder import SteamPathFinder
 
 from swe_installer import constants
 from swe_installer.constants import APP_NAME, APP_AUTHOR
