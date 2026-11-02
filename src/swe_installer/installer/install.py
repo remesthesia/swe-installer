@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 import sys
 from urllib.request import urlretrieve
@@ -33,6 +34,11 @@ def download_ror2():
         "-dir", paths.ror2_download_path()
     ])
 
+def downgrade_ror2():
+    shutil.rmtree(paths.ror2_directory(), ignore_errors=True)
+    shutil.copytree(paths.ror2_download_path(), paths.ror2_directory())
+
 def install():
     download_depot_downloader()
     download_ror2()
+    downgrade_ror2()
