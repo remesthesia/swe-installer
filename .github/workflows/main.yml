@@ -31,7 +31,7 @@ jobs:
     - name: Build
       working-directory: ./
       run: |
-        pyinstaller --name SwE-Installer --collect-all src ${{ env.FILE }}
+        pyinstaller --name SwE-Installer --paths src --collect-submodules swe_installer ${{ env.FILE }}
 
     - name: Windows
       if: matrix.os == 'windows-latest'
